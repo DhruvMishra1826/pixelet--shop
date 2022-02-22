@@ -1,0 +1,77 @@
+{% extends 'shop/basic.html' %} 
+{% block title%} {{product.product_name}} -myKart {% endblock %} 
+
+{% block body %}
+
+
+<div class="container my-4">
+    <div class="row">
+    <div class="col-md-4">
+       <div class="row">
+             <img src="/media/{{product.image}}" width="200px" height="300px">
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-success cart mx-3 my-3" id="carto">Add to Cart</button>
+        </div>
+    </div>
+    <div class="col-md-8">
+      <h3 id='id1'>{{product.id}}</h3>
+        <h3 id='id2'>{{product.product_name}}</h3>
+        <h5 id='id3'><b>Rs. {{product.price}}</b></h5>
+        <p>{{product.desc}}</p>
+    </div>
+
+</div>
+</div>
+{% endblock %}
+
+{% block js%} 
+  <script>
+     
+     console.log('welcome to myKart');
+     
+     // i made this function to initially store the cart item count
+     
+      
+     let cart = localStorage.getItem('cart');
+     let sum=0;
+     
+     // initial tasks
+      if (localStorage.getItem('cart')==null){
+        val=0;
+        cart = {};
+      }
+      else{
+      cart = JSON.parse(localStorage.getItem('cart'));
+
+      for (item in cart){
+        sum+= cart[item][0];
+      }
+      document.getElementById('popcart').innerHTML=`Cart(${sum})`;
+      }
+      
+
+      let curr= document.getElementById('id1').innerText;
+      let cst= document.getElementById('id3').innerText;
+      let addtocart = document.getElementById('carto');
+      
+      addtocart.addEventListener('click',()=>{
+        console.log('clicked1')
+         if (cart['pr'+curr]==undefined){
+           cart['pr'+curr]=[1,document.getElementById('id2').innerText,cst.substring(3,)];
+         }
+         else{
+           cart['pr'+curr][0]=cart['pr'+curr][0]+1;
+           sum+=1;
+         }
+
+         localStorage.setItem('cart',JSON.stringify(cart));
+         document.getElementById('popcart').innerHTML=`Cart(${sum})`;
+         console.log(cart);
+      })
+
+      $('#popcart').popover()
+
+      document.getElementById('popcart').setAttribute('data-content','<h5>Cart</h5>');
+  </script>
+{% endblock %}

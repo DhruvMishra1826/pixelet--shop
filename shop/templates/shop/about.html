@@ -1,0 +1,66 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} About Us{% endblock %}
+{% block body %}
+
+
+
+
+<main role="main">
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron" style="background-color: #dbf1ed;">
+    <div class="container" style="background-color: turquoise; border-radius: 5px; border: 3px solid black;">
+      <h1 class="display-3" style="color: #040764"><strong>PixeletShop!</strong></h1>
+      <p style="color:black ; padding: 4px;">PixeletShop! Pvt Ltd. is an Indian electronic commerce company based in Bengaluru, India. Founded by Dhruv Mishra in 2022, the company initially focused on book sales, before expanding into other product categories such as consumer electronics, fashion, and lifestyle products.
+
+The service competes primarily with Amazon' s Indian subsidiary, and the domestic rival Snapdeal.As of March 2022, myKart held a 39.5% market share of India's e-commerce industry. PixeletShop! is significantly dominant in the sale of apparel (a position that was bolstered by its acquisitions of Myntra and Jabong.com), and was described as being "neck and neck" with Amazon in the sale of electronics and mobile phones.myKart also owns PhonePe, a mobile payments service based on the Unified Payments Interface (UPI).
+
+In March 2022, U.S.-based retail chain Walmart acquired a 77% controlling stake in myKart for US$16 billion, valuing it at $22 billion.</p>
+      <p><a class="btn btn-primary btn-lg" href="https://en.wikipedia.org/wiki/Flipkart" role="button" style="margin-bottom: 10px; background-color: #2a27d7;">Learn more »</a></p>
+    </div>
+  </div>
+
+  <div class="container" style="border: 2px solid black; padding: 8px;">
+    <!-- Example row of columns -->
+    <div class="row" style="margin: 5px;">
+      <h3 style="color: rgb(16, 109, 58); font-weight: bold; text-align: center;">Please do share your views on our website to others people as well.</h3>
+       
+      <div class="col my-4">
+        <div class="fb-comments" style="align-self: center;" data-href="http://127.0.0.1:8000/shop/about/" data-width="" data-numposts="5"></div>
+        
+    <hr>
+
+  </div> <!-- /container -->
+
+</main>
+
+{% endblock %}
+
+
+{% block js%} 
+  <script>
+
+let cart = localStorage.getItem('cart');
+     let sum=0;
+   
+     // initial tasks
+      if (localStorage.getItem('cart')==null){
+        val=0;
+        cart = {};
+      }
+      else{
+      cart = JSON.parse(localStorage.getItem('cart'));
+
+      for (item in cart){
+        sum+= cart[item][0];
+      }
+      console.log(sum);
+      document.getElementById('popcart').innerHTML=`Cart(${sum})`;
+      }
+
+      $('#popcart').popover()
+
+     document.getElementById('popcart').setAttribute('data-content','<h5>Cart</h5>');
+  </script>
+{% endblock %}

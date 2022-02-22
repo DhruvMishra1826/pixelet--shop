@@ -1,0 +1,101 @@
+{% extends 'shop/basic.html' %} 
+{% block title%} Tracker {% endblock %} 
+
+{% block body %}
+<div class="container">
+    <div class="col my-4">
+        <h2 style="color: seagreen; text-align: center;"><strong>Enter your Order Id and Email address to track your order</strong></h2>
+        <form method="post" action="#" id="trackerForm">{% csrf_token %}
+            <div class="form-row my-4" style="border: 4px solid black; padding: 15px;">
+                <div class="form-group col-md-6">
+                    <label for="inputname">Order Id:</label>
+                    <input type="text" class="form-control my-1" id="orderId" name="orderId" placeholder="Order Id">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Email:</label>
+                    <input type="email" class="form-control my-1" id="email" name="email" placeholder="Email">
+                </div>
+                <button type="submit" class="btn btn-info" style="background-color: #17b1b8;" id="track">Track Order</button>
+            </div>
+    </div>
+    <div class="col my-8">
+        <h2 style="color: seagreen; text-align: center;"><strong>Your Order Status</strong></h2>
+  
+        <div class="my-6">
+            <ul class="list-group" id="items">
+            	Enter your order Id and Email and click Track Order to find details about your order!
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    let cart = localStorage.getItem('cart');
+     let sum=0;
+   
+     // initial tasks
+      if (localStorage.getItem('cart')==null){
+        val=0;
+        cart = {};
+      }
+      else{
+      cart = JSON.parse(localStorage.getItem('cart'));
+
+      for (item in cart){
+        sum+= cart[item][0];
+      }
+      console.log(sum);
+      document.getElementById('popcart').innerHTML=`Cart(${sum})`;
+      }
+      
+   let track = document.getElementById('track');
+   track.addEventListener('click',()=>{
+       
+    document.getElementById('items').innerHTML="";
+    
+    var formData = {
+        'orderId': $('input[name=orderId]').val(),
+        'email': $('input[name=email]').val(),
+        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+    };
+    
+    $.ajax({
+        type: 'POST',
+        url: '/shop/tracker/',
+        data: formData,
+        encode: true
+    })
+    
+   
+
+    .done(function(data){
+        
+        let html="";
+        
+        let curr = JSON.parse(data);
+        if (curr.length>0 & curr!={}){
+            
+            for (let i=0; i<curr.length; i++){
+             html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                     ${curr[i]['text']}
+                     <span class="badge badge-primary badge-pill">${curr[i]['time']}</span>
+                     </li>`
+             }
+
+             document.getElementById('items').innerHTML=html;
+        }
+        else{
+           
+            html+="Please enter valid order Id and Email. Thank You!"
+            document.getElementById('items').innerHTML=html;
+        }
+      
+    })
+
+    event.preventDefault();
+
+   })
+</script>
+{% endblock %}

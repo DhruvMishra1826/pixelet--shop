@@ -1,0 +1,155 @@
+{% extends 'shop/basic.html' %} 
+
+{% block title%} Contact Us {% endblock %} 
+
+{% block css %} 
+.map-container-section {
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+  }
+  .map-container-section iframe {
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+  }
+{% endblock %}
+{% block body %} 
+
+<div class="container">
+<!-- Section: Contact v.1 -->
+<section class="my-5">
+
+    <h1 class="h1-responsive font-weight-bold text-center my-5" style="color: mediumseagreen;"><strong>Contact us</strong></h1>
+   
+    <p class="text-center w-responsive mx-auto pb-2">You can contact us for any feedback, suggestions or any sort of problem. Hope you like our service</p>
+  
+
+    <div class="row"  style="border: 5px solid black; padding: 10px;">
+  
+     
+      <div class="col-lg-5 mb-lg-0 mb-4">
+  
+   
+        <form class="card" action="/shop/contact/" method="post" style="border: 1px solid black;">{% csrf_token %}
+          <div class="card-body">
+    
+            <div class="form-header blue accent-1">
+              <h3 class="mt-2"  style="color: navy;"><i class="fas fa-envelope"></i> Write to us:</h3>
+              
+            </div>
+
+            <div class="md-form">
+              <i class="fas fa-user prefix grey-text  my-3"></i>
+              <label for="form-name">Your name</label>
+              <input type="text" id="name" name="name" class="form-control">
+              <hr>
+              
+            </div>
+            <div class="md-form">
+              <i class="fas fa-envelope prefix grey-text"></i>
+              <label for="form-email">Your email</label>
+              <input type="text" id="email" name="email" class="form-control">
+              <hr>
+
+            </div>
+            <div class="md-form">
+              <i class="fas fa-tag prefix grey-text"></i>
+              <label for="form-Subject">Subject</label>
+              <input type="text" id="subject" name="subject" class="form-control">
+              <hr>
+
+            </div>
+            <div class="md-form">
+              <i class="fas fa-pencil-alt prefix grey-text"></i>
+              <label for="form-text">Send message</label>
+              <textarea id="text" name="text" class="form-control md-textarea" rows="3"></textarea>
+              <hr>
+
+            </div>
+            <div class="text-center">
+              
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+          </div>
+        </form>
+       
+  
+      </div>
+   
+  
+    
+      <div class="col-lg-7">
+  
+        
+       
+
+        <div style="width: 100%"><iframe width="100%" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Vrindavan+(myKart)&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/truck-gps/">transport gps</a></iframe></div>
+        
+        
+        <div class="row text-center">
+          <div class="col-md-4">
+            <a class="btn-floating blue accent-1">
+              <i class="fas fa-map-marker-alt"></i>
+            </a>
+            <p>Vrindavan, 28011</p>
+            <p class="mb-md-0">India</p>
+          </div>
+          <div class="col-md-4">
+            <a class="btn-floating blue accent-1">
+              <i class="fas fa-phone"></i>
+            </a>
+            <p>+91 9874738123</p>
+            <p class="mb-md-0">Mon - Fri, 8:00-22:00</p>
+          </div>
+          <div class="col-md-1">
+            <a class="btn-floating blue accent-1">
+              <i class="fas fa-envelope"></i>
+            </a>
+            <p>PixeletShop@gmail.com</p>
+            <p class="mb-0">sale@gmail.com</p>
+          </div>
+        </div>
+  
+      </div>
+    
+  
+    </div>
+ 
+  
+  </section>
+  
+</div>
+
+ {% endblock %}
+
+
+ {% block js%} 
+ <script>
+
+let cart = localStorage.getItem('cart');
+     let sum=0;
+   
+     // initial tasks
+      if (localStorage.getItem('cart')==null){
+        val=0;
+        cart = {};
+      }
+      else{
+      cart = JSON.parse(localStorage.getItem('cart'));
+
+      for (item in cart){
+        sum+= cart[item][0];
+      }
+      console.log(sum);
+      document.getElementById('popcart').innerHTML=`Cart(${sum})`;
+      }
+
+      $('#popcart').popover()
+
+     document.getElementById('popcart').setAttribute('data-content','<h5>Cart</h5>');
+ </script>
+{% endblock %}
