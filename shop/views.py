@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Product, Contact, Order, OrderUpdate
 from math import ceil
+from PIL import Image
 import json
 
 # Create your views here.
